@@ -137,10 +137,10 @@ points = PoolVector2Array( 0, 0, 8, 0, 8, 8, 0, 8 )
 script/source = "extends KinematicBody2D
 
 const GRAVITY = 400
-const SPEED = 60
+
 const JUMP_POWER = 150
 const UP_VECTOR = Vector2(0,-1)
-
+const SPEED = 60
 var movement = Vector2()
 
 func _ready():
