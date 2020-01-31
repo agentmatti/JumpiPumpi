@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/Player.png" type="Texture" id=1]
 
@@ -28,8 +28,9 @@ func _process(delta):
 	
 	
 	check_key_input()
+	check_for_stomp()
 
-	move_and_slide(movement, UP_VECTOR)
+	movement = move_and_slide(movement, UP_VECTOR)
 	
 
 	
@@ -64,7 +65,13 @@ func set_animation():
 		$AnimationPlayer.play(\"Idle\")
 		
 	if is_on_floor() == false:
-		$AnimationPlayer.play(\"Air\")"
+		$AnimationPlayer.play(\"Air\")
+		
+		
+func check_for_stomp():
+	for body in $hitbox.get_overlapping_bodies():
+		if body.has_method(\"on_stomp\") and body.is_alive:
+			body.on_stomp()"
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 5, 5 )
@@ -116,11 +123,15 @@ tracks/0/keys = {
 "values": [ 4, 6 ]
 }
 
-[node name="Player" type="KinematicBody2D"]
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 3.57535, 5 )
+
+[node name="Player2" type="KinematicBody2D"]
 collision/safe_margin = 0.01
 script = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
+visible = false
 current = true
 limit_left = -30
 limit_top = -40
@@ -147,3 +158,9 @@ shape = SubResource( 2 )
 anims/Air = SubResource( 3 )
 anims/Idle = SubResource( 4 )
 anims/Walk = SubResource( 5 )
+
+[node name="hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+position = Vector2( 0.283401, 5.19575 )
+shape = SubResource( 6 )
