@@ -19,6 +19,10 @@ config/name="JumpiPumpi"
 run/main_scene="res://Szenen/Game.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+G="*res://scripts/Globals.gd"
+
 [display]
 
 window/size/width=240
